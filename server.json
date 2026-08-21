@@ -1,0 +1,43 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "ai.eonik/mcp",
+  "title": "eonik",
+  "description": "Read brand, research, and performance facts; draft briefs. Never spends. You approve every cut.",
+  "websiteUrl": "https://www.eonik.ai/mcp",
+  "repository": {
+    "url": "https://github.com/eonik-ai/eonik-mcp",
+    "source": "github"
+  },
+  "version": "2.0.0",
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "eonik-mcp",
+      "version": "2.0.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "EONIK_API_KEY",
+          "description": "eonik workspace API key or session token",
+          "isRequired": true,
+          "isSecret": true
+        },
+        {
+          "name": "EONIK_API_URL",
+          "description": "API origin (default https://api.eonik.ai)",
+          "isRequired": false,
+          "isSecret": false
+        },
+        {
+          "name": "EONIK_BRAND_ID",
+          "description": "Optional brand workspace id",
+          "isRequired": false,
+          "isSecret": false
+        }
+      ]
+    }
+  ]
+}

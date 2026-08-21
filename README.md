@@ -1,62 +1,56 @@
 <div align="center">
-  <br />
   <a href="https://www.eonik.ai">
-    <img src="https://www.eonik.ai/logo.svg" alt="eonik" width="120" />
+    <img src="https://www.eonik.ai/logo.svg" alt="eonik" width="160" />
   </a>
-  <h1 align="center">eonik MCP Server</h1>
-  <p align="center">
-    <strong>Connect Claude, Cursor, or Codex to the same brand-brain the Mac app uses</strong>
+  <h1>eonik for Claude, Cursor, and Codex</h1>
+  <p><strong>Finished, on-brand ads — without the busywork.</strong></p>
+  <p>Connect the assistant you already pay for to your eonik account. It reads brand, research, and performance facts, then drafts. It never spends. You approve every cut.</p>
+  <p>
+    <a href="https://www.eonik.ai">Website</a> ·
+    <a href="https://www.eonik.ai/download">Download for Mac</a> ·
+    <a href="https://www.eonik.ai/mcp">Setup</a> ·
+    <a href="https://github.com/eonik-ai">GitHub</a>
   </p>
-  <p align="center">
-    <a href="https://www.eonik.ai">Website</a> •
-    <a href="https://www.eonik.ai/mcp">MCP</a> •
-    <a href="https://www.eonik.ai/download">Download for Mac</a>
+  <p>
+    <a href="https://www.npmjs.com/package/eonik-mcp"><img src="https://img.shields.io/npm/v/eonik-mcp?style=flat-square" alt="npm version" /></a>
+    <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-18181B?style=flat-square" alt="MIT license" /></a>
+    <a href="https://modelcontextprotocol.io"><img src="https://img.shields.io/badge/MCP-Model%20Context%20Protocol-555?style=flat-square" alt="Model Context Protocol" /></a>
+    <img src="https://img.shields.io/badge/macOS-15%2B%20Apple%20silicon-000?style=flat-square" alt="macOS 15+ Apple silicon" />
+  </p>
+  <p>
+    <strong>English</strong> ·
+    <a href="docs/readme/README.es.md">Español</a> ·
+    <a href="docs/readme/README.pt-BR.md">Português</a> ·
+    <a href="docs/readme/README.fr.md">Français</a> ·
+    <a href="docs/readme/README.hi.md">हिन्दी</a> ·
+    <a href="docs/readme/README.zh-CN.md">简体中文</a> ·
+    <a href="docs/readme/README.ja.md">日本語</a> ·
+    <a href="docs/readme/README.ko.md">한국어</a>
   </p>
 </div>
 
 ---
 
-## What is eonik?
+eonik is a **Mac app for making ads**. You start from an ad that already works, build the cut from your footage (AI fills the gaps), check it against your brand, and get it approved. The editor is free. You pay for AI generation. **You stay in control and take the credit.**
 
-[eonik](https://www.eonik.ai) is a **Mac app for making ads**. Bring your footage and AI clips; leave with finished, on-brand cuts. The editor is free; you pay for AI generation. **You approve every cut. eonik never touches ad spend.**
+This repository is the **[Model Context Protocol](https://modelcontextprotocol.io/) (MCP)** connector so Claude Desktop, Cursor, Codex, or ChatGPT can use your eonik account. It is not the Mac app. Timeline edits and export stay on Mac.
 
-This repo is **not** the editor. It is a [Model Context Protocol](https://modelcontextprotocol.io/) stdio bridge so an agent you already pay for can use eonik's **brand brain**: research archive, memory ledger, own-account readouts, grounded briefs.
+## What the assistant can do
 
-## Two MCP surfaces (do not mix them up)
+- Read your brand, notes you asked it to remember, and ads you saved
+- Look up competitor ads eonik already archived (what ran, how long, how it is built)
+- Read your own Meta performance as **facts** (spend, CTR, status) — never as a prediction
+- Break down a public ad scene by scene
+- Hand you receipts so **you** write the brief
 
-| Surface | Where | What it can do |
-|---------|--------|----------------|
-| **This package** | `api.eonik.ai` via stdio | Brand brain only — gather, research, remember, produce briefs |
-| **Mac app** | `127.0.0.1` while eonik is running | Editor timeline **and** the same brand brain (proxied) |
+## What it cannot do
 
-Claude inside the Mac app talks to the local server. Claude Desktop / Cursor / Codex use **this** package (or the remote SSE connector on the API).
+It cannot pause, scale, kill, or launch ads. It cannot write to Meta, TikTok, or Google Ads. Upload is a human click in Ads Manager. It will not say an ad “will work.”
 
-There is **one tool layer**: `command_tools.py` → `POST /api/tools/dispatch`. This process does not define tools. It loads `GET /api/tools/manifest` and dispatches by name.
-
-## What the agent can do
-
-Doctrine (CORE_PRINCIPLES): **labor and facts, never judgment, never budget.**
-
-- **Gather** — brand DNA, context ledger, account condition, Monday considerations, own-account memory, watched competitors, category topics, own-ad / campaign readouts (facts only)
-- **Research** — deconstruct a public ad, structural patterns, competitor timeline, craft playbook (counts over what survived — never “this caused the win”), swipe file
-- **Remember** — verbatim notes, brand truths, dated plans; `remember` / `recall` for durable brand memory
-- **Produce** — `get_brief_grounding` (facts; **you** author the brief). `generate_creative_brief` exists but is deprecated.
-
-## What the agent cannot do
-
-No tool pauses, scales, kills, or launches ads. No write access to Meta / TikTok / Google Ads. Upload stays a human click in Ads Manager. Performance **predictions** are banned; readouts are receipts.
-
-v2.0.0 **removed** the old package's banned surface (`run_budget_audit`, `launch_ad_run`, `create_ad_creation_run`, hypothesis queue, budget leaks, etc.). Those routes are not the product.
-
-Not offered on this remote bridge (Mac / UI owned):
-
-- `record_validation_decision` — marketer's own UI action, `revealed` grade
-- `save_creative_read` — on-device analyzer contribution from the Mac app
-
-## Quick start
+## Install
 
 1. Create an API key in eonik (workspace settings).
-2. Build and point Claude Desktop (or Cursor) at this server:
+2. Add this to Claude Desktop, Cursor, or Codex:
 
 ```json
 {
@@ -65,13 +59,14 @@ Not offered on this remote bridge (Mac / UI owned):
       "command": "npx",
       "args": ["-y", "eonik-mcp"],
       "env": {
-        "EONIK_API_KEY": "eonk_live_...",
-        "EONIK_API_URL": "https://api.eonik.ai"
+        "EONIK_API_KEY": "eonk_live_..."
       }
     }
   }
 }
 ```
+
+Optional: `EONIK_API_URL` (default `https://api.eonik.ai`) and `EONIK_BRAND_ID` if you have more than one brand.
 
 From a clone:
 
@@ -81,14 +76,22 @@ export EONIK_API_KEY=eonk_live_...
 node build/index.js
 ```
 
-Optional: `EONIK_BRAND_ID` scopes every call to one brand workspace (`X-Brand-Id`).
+How the assistant should use these tools: **[eonik-mcp-skill](https://github.com/eonik-ai/eonik-mcp-skill)**.
 
-## Companion skill
+## Security
 
-How an agent should **use** these tools: [eonik-mcp-skill](https://github.com/eonik-ai/eonik-mcp-skill).
+Keep `EONIK_API_KEY` in your MCP host env. Do not commit it. See [SECURITY.md](SECURITY.md).
 
-## Links
+## The eonik family
 
-- [Download eonik for Mac](https://www.eonik.ai/download)
-- [Chrome extension](https://chromewebstore.google.com/detail/eonik/ikjbopcpohlogfbccbpcoglefjlbdcie)
-- [GitHub org](https://github.com/eonik-ai)
+| | |
+|---|---|
+| Mac app | [Download](https://www.eonik.ai/download) · editor free · macOS 15+ · Apple silicon |
+| This connector | [eonik-mcp](https://github.com/eonik-ai/eonik-mcp) |
+| Assistant playbook | [eonik-mcp-skill](https://github.com/eonik-ai/eonik-mcp-skill) |
+| Homebrew | [homebrew-tap](https://github.com/eonik-ai/homebrew-tap) |
+| Save ads you see | [Chrome extension](https://chromewebstore.google.com/detail/eonik/ikjbopcpohlogfbccbpcoglefjlbdcie) |
+
+## License
+
+MIT. See [LICENSE](LICENSE).

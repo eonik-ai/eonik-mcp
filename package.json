@@ -1,26 +1,44 @@
 {
   "name": "eonik-mcp",
   "version": "2.0.0",
-  "description": "MCP bridge for eonik — brand context, competitor research archive, creative readouts, grounded briefs. Agents read and draft; they never spend. You approve every cut.",
+  "description": "Connect Claude, Cursor, or Codex to eonik: brand, competitor research, and creative briefs. Agents read and draft; they never spend.",
   "main": "build/index.js",
   "type": "module",
   "bin": {
     "eonik-mcp": "build/index.js"
   },
-  "scripts": {
-    "build": "tsc",
-    "start": "node build/index.js",
-    "dev": "tsx src/index.ts"
+  "homepage": "https://www.eonik.ai/mcp",
+  "bugs": {
+    "url": "https://github.com/eonik-ai/eonik-mcp/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eonik-ai/eonik-mcp.git"
   },
   "keywords": [
     "mcp",
+    "model-context-protocol",
     "eonik",
     "ads",
-    "creative",
+    "meta-ads",
+    "claude",
+    "cursor",
+    "codex",
     "brand",
-    "claude"
+    "creative-brief"
   ],
   "license": "MIT",
+  "mcpName": "ai.eonik/mcp",
+  "files": [
+    "build",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "node build/index.js",
+    "dev": "tsx src/index.ts",
+    "prepublishOnly": "npm run build"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.1",
     "axios": "^1.7.2",
