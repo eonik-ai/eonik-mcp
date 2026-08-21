@@ -1,14 +1,26 @@
 {
   "name": "eonik-mcp",
-  "version": "1.0.0",
-  "description": "eonik MCP Server for Claude",
+  "version": "2.0.0",
+  "description": "MCP bridge for eonik — brand context, competitor research archive, creative readouts, grounded briefs. Agents read and draft; they never spend. You approve every cut.",
   "main": "build/index.js",
   "type": "module",
+  "bin": {
+    "eonik-mcp": "build/index.js"
+  },
   "scripts": {
     "build": "tsc",
     "start": "node build/index.js",
     "dev": "tsx src/index.ts"
   },
+  "keywords": [
+    "mcp",
+    "eonik",
+    "ads",
+    "creative",
+    "brand",
+    "claude"
+  ],
+  "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.1",
     "axios": "^1.7.2",
