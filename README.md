@@ -2,13 +2,13 @@
   <a href="https://www.eonik.ai">
     <img src="https://www.eonik.ai/logo.svg" alt="eonik" width="160" />
   </a>
-  <h1>eonik for Claude, Cursor, and Codex</h1>
-  <p><strong>Finished, on-brand ads — without the busywork.</strong></p>
-  <p>Connect the assistant you already pay for to your eonik account. It reads brand, research, and performance facts, then drafts. It never spends. You approve every cut.</p>
+  <h1>eonik</h1>
+  <p><strong>Finished, on-brand ads without the busywork.</strong></p>
+  <p>You see what’s worth making. eonik builds the cut. You approve. Connect Claude, Cursor, or Codex to that same account: the assistant reads and drafts; it never spends. The cut itself is made on Mac.</p>
   <p>
     <a href="https://www.eonik.ai">Website</a> ·
     <a href="https://www.eonik.ai/download">Download for Mac</a> ·
-    <a href="https://www.eonik.ai/mcp">Setup</a> ·
+    <a href="https://www.eonik.ai/mcp">Connect an assistant</a> ·
     <a href="https://github.com/eonik-ai">GitHub</a>
   </p>
   <p>
@@ -31,9 +31,9 @@
 
 ---
 
-eonik is a **Mac app for making ads**. You start from an ad that already works, build the cut from your footage (AI fills the gaps), check it against your brand, and get it approved. The editor is free. You pay for AI generation. **You stay in control and take the credit.**
+eonik gets you **finished, on-brand ads without the busywork.** You start from an ad that already works, build the cut from your footage (AI fills the gaps), check it against your brand, and get it approved. **You stay in control and take the credit.**
 
-This repository is the **[Model Context Protocol](https://modelcontextprotocol.io/) (MCP)** connector so Claude Desktop, Cursor, Codex, or ChatGPT can use your eonik account. It is not the Mac app. Timeline edits and export stay on Mac.
+You do that work in the **Mac app** ([download](https://www.eonik.ai/download) · editor free · macOS 15+ · Apple silicon). This repository connects Claude, Cursor, or Codex to the same account so the assistant can read brand, research, and performance facts, then draft. It never spends. You approve every cut. Timeline edits and export stay on Mac.
 
 ## What the assistant can do
 
@@ -76,19 +76,18 @@ export EONIK_API_KEY=eonk_live_...
 node build/index.js
 ```
 
-How the assistant should use these tools: **[eonik-mcp-skill](https://github.com/eonik-ai/eonik-mcp-skill)**.
+How the assistant should work, once connected: [eonik-mcp-skill](https://github.com/eonik-ai/eonik-mcp-skill) (`openclaw skills install @techievena/eonik`).
 
 ## Security
 
 Keep `EONIK_API_KEY` in your MCP host env. Do not commit it. See [SECURITY.md](SECURITY.md).
 
-## The eonik family
+## Also
 
 | | |
 |---|---|
-| Mac app | [Download](https://www.eonik.ai/download) · editor free · macOS 15+ · Apple silicon |
-| This connector | [eonik-mcp](https://github.com/eonik-ai/eonik-mcp) |
-| Assistant playbook | [eonik-mcp-skill](https://github.com/eonik-ai/eonik-mcp-skill) |
+| Download for Mac | [eonik.ai/download](https://www.eonik.ai/download) · editor free · macOS 15+ · Apple silicon |
+| Connect an assistant | [eonik.ai/mcp](https://www.eonik.ai/mcp) |
 | Homebrew | [homebrew-tap](https://github.com/eonik-ai/homebrew-tap) |
 | Save ads you see | [Chrome extension](https://chromewebstore.google.com/detail/eonik/ikjbopcpohlogfbccbpcoglefjlbdcie) |
 

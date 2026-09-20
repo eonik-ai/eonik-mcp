@@ -1,6 +1,6 @@
 # Contributing
 
-eonik is a Mac app for making ads. This repo is the public connector so Claude, Cursor, and Codex can read that account.
+eonik gets you finished, on-brand ads without the busywork. The cut is made on Mac. This repo connects Claude, Cursor, or Codex to that account.
 
 Issues and pull requests are welcome for:
 

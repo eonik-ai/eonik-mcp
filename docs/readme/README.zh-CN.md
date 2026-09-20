@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://www.eonik.ai"><img src="https://www.eonik.ai/logo.svg" alt="eonik" width="160" /></a>
-  <h1>面向 Claude、Cursor 和 Codex 的 eonik</h1>
+  <h1>eonik</h1>
   <p><strong>成品、符合品牌的广告，少做杂活。</strong></p>
   <p>
     <a href="../../README.md">English</a> ·
@@ -14,7 +14,7 @@
   </p>
 </div>
 
-eonik 是一款**做广告的 Mac 应用**。本仓库把 Claude、Cursor 或 Codex 接到你的账户。助手读取品牌、调研和数据，然后起草。**从不花钱。每一刀由你拍板。**
+eonik 帮你做出**成品、符合品牌的广告，少做杂活。**成片在 Mac 应用里完成（[下载](https://www.eonik.ai/download)）。本仓库把 Claude、Cursor 或 Codex 接到同一账户。助手读取并起草。**从不花钱。每一刀由你拍板。**
 
 ```json
 {

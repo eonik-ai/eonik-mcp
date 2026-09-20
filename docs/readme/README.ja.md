@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://www.eonik.ai"><img src="https://www.eonik.ai/logo.svg" alt="eonik" width="160" /></a>
-  <h1>Claude / Cursor / Codex 向け eonik</h1>
+  <h1>eonik</h1>
   <p><strong>完成されたオンブランド広告を、雑務なしで。</strong></p>
   <p>
     <a href="../../README.md">English</a> ·
@@ -14,7 +14,7 @@
   </p>
 </div>
 
-eonik は**広告をつくる Mac アプリ**です。このリポジトリは Claude、Cursor、Codex をアカウントにつなぎます。アシスタントはブランド・調査・数字を読み、下書きします。**支出はしません。カットの承認はあなたです。**
+eonik は**完成されたオンブランド広告を、雑務なしで**届けます。カットは Mac アプリで作ります（[ダウンロード](https://www.eonik.ai/download)）。このリポジトリは Claude、Cursor、Codex を同じアカウントにつなぎます。アシスタントは読み、下書きします。**支出はしません。カットの承認はあなたです。**
 
 ```json
 {

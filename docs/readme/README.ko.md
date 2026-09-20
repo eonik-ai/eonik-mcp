@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://www.eonik.ai"><img src="https://www.eonik.ai/logo.svg" alt="eonik" width="160" /></a>
-  <h1>Claude, Cursor, Codex용 eonik</h1>
+  <h1>eonik</h1>
   <p><strong>완성된 온브랜드 광고, 잡일 없이.</strong></p>
   <p>
     <a href="../../README.md">English</a> ·
@@ -14,7 +14,7 @@
   </p>
 </div>
 
-eonik은 **광고를 만드는 Mac 앱**입니다. 이 저장소는 Claude, Cursor 또는 Codex를 계정에 연결합니다. 어시스턴트는 브랜드·리서치·수치를 읽고 초안을 씁니다. **지출하지 않습니다. 모든 컷은 당신이 승인합니다.**
+eonik은 **완성된 온브랜드 광고를 잡일 없이** 만듭니다. 컷은 Mac 앱에서 합니다([다운로드](https://www.eonik.ai/download)). 이 저장소는 Claude, Cursor 또는 Codex를 같은 계정에 연결합니다. 어시스턴트는 읽고 초안을 씁니다. **지출하지 않습니다. 모든 컷은 당신이 승인합니다.**
 
 ```json
 {

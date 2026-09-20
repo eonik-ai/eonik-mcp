@@ -1,7 +1,7 @@
 {
   "name": "eonik-mcp",
   "version": "2.0.0",
-  "description": "Connect Claude, Cursor, or Codex to eonik: brand, competitor research, and creative briefs. Agents read and draft; they never spend.",
+  "description": "Finished, on-brand ads without the busywork. Connect Claude, Cursor, or Codex to your eonik account. The assistant reads and drafts; it never spends.",
   "main": "build/index.js",
   "type": "module",
   "bin": {

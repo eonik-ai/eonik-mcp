@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://www.eonik.ai"><img src="https://www.eonik.ai/logo.svg" alt="eonik" width="160" /></a>
-  <h1>Claude, Cursor और Codex के लिए eonik</h1>
+  <h1>eonik</h1>
   <p><strong>पूरी, ऑन-ब्रांड ऐड्स — बिना भारी मेहनत के।</strong></p>
   <p>
     <a href="../../README.md">English</a> ·
@@ -14,7 +14,7 @@
   </p>
 </div>
 
-eonik **ऐड बनाने वाला Mac ऐप** है। यह रिपो Claude, Cursor या Codex को आपके खाते से जोड़ता है। असिस्टेंट ब्रांड, रिसर्च और आंकड़े पढ़ता है; ड्राफ्ट लिखता है। **खर्च नहीं करता। हर कट आप मंज़ूर करते हैं।**
+eonik से **पूरी, ऑन-ब्रांड ऐड्स बिना भारी मेहनत के** मिलती हैं। कट Mac ऐप में बनता है ([डाउनलोड](https://www.eonik.ai/download))। यह रिपो Claude, Cursor या Codex को उसी खाते से जोड़ता है। असिस्टेंट पढ़ता है और ड्राफ्ट लिखता है। **खर्च नहीं करता। हर कट आप मंज़ूर करते हैं।**
 
 ```json
 {

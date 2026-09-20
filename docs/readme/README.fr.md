@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://www.eonik.ai"><img src="https://www.eonik.ai/logo.svg" alt="eonik" width="160" /></a>
-  <h1>eonik pour Claude, Cursor et Codex</h1>
+  <h1>eonik</h1>
   <p><strong>Des pubs finies, on-brand, sans le sale boulot.</strong></p>
   <p>
     <a href="../../README.md">English</a> ·
@@ -14,7 +14,7 @@
   </p>
 </div>
 
-eonik est une **app Mac pour faire des pubs**. Ce dépôt connecte Claude, Cursor ou Codex à votre compte. L’assistant lit marque, recherche et chiffres ; il rédige. **Il ne dépense jamais. Vous validez chaque cut.**
+eonik vous donne des **pubs finies, on-brand, sans le sale boulot.** Le montage se fait dans l’app Mac ([télécharger](https://www.eonik.ai/download)). Ce dépôt connecte Claude, Cursor ou Codex au même compte. L’assistant lit et rédige. **Il ne dépense jamais. Vous validez chaque cut.**
 
 ```json
 {
