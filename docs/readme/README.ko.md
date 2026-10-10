@@ -14,7 +14,9 @@
   </p>
 </div>
 
-eonik은 **완성된 온브랜드 광고를 잡일 없이** 만듭니다. 컷은 Mac 앱에서 합니다([다운로드](https://www.eonik.ai/download)). 이 저장소는 Claude, Cursor 또는 Codex를 같은 계정에 연결합니다. 어시스턴트는 읽고 초안을 씁니다. **지출하지 않습니다. 모든 컷은 당신이 승인합니다.**
+디자이너가 마스터를 만들면, eonik이 미디어 플랜에 필요한 모든 사이즈를 브랜드에 맞게 Mac의 eonik 앱에서 만듭니다([다운로드](https://www.eonik.ai/download)). Claude, ChatGPT, Cursor, Codex, VS Code에서 요청하세요. 직접 결정하기 전에는 아무것도 만들거나 바꾸거나 보내지 않습니다.
+
+연결: `https://api.eonik.ai/mcp`를 커넥터로 추가하고 로그인하세요. 로컬 서버를 실행하는 호스트의 경우:
 
 ```json
 {
@@ -22,10 +24,12 @@ eonik은 **완성된 온브랜드 광고를 잡일 없이** 만듭니다. 컷은
     "eonik": {
       "command": "npx",
       "args": ["-y", "eonik-mcp"],
-      "env": { "EONIK_API_KEY": "eonk_live_..." }
+      "env": { "EONIK_API_KEY": "eonk_live_...", "EONIK_BRAND_ID": "..." }
     }
   }
 }
 ```
+
+브랜드가 둘 이상이면 `EONIK_BRAND_ID`가 필요합니다. eonik은 어떤 클라이언트의 작업인지 절대 추측하지 않습니다.
 
 [Mac용 다운로드](https://www.eonik.ai/download) · 에디터 무료 · macOS 15+ · Apple silicon

@@ -14,7 +14,9 @@
   </p>
 </div>
 
-eonik vous donne des **pubs finies, on-brand, sans le sale boulot.** Le montage se fait dans l’app Mac ([télécharger](https://www.eonik.ai/download)). Ce dépôt connecte Claude, Cursor ou Codex au même compte. L’assistant lit et rédige. **Il ne dépense jamais. Vous validez chaque cut.**
+Votre designer crée le master. eonik fait toutes les tailles que demande votre plan média, fidèles à la marque, dans l'app eonik sur votre Mac ([télécharger](https://www.eonik.ai/download)). Demandez-le depuis Claude, ChatGPT, Cursor, Codex ou VS Code : rien n'est créé, modifié ou envoyé sans votre accord.
+
+Connexion : ajoutez `https://api.eonik.ai/mcp` comme connecteur et connectez-vous. Pour les hôtes qui lancent des serveurs locaux :
 
 ```json
 {
@@ -22,10 +24,12 @@ eonik vous donne des **pubs finies, on-brand, sans le sale boulot.** Le montage 
     "eonik": {
       "command": "npx",
       "args": ["-y", "eonik-mcp"],
-      "env": { "EONIK_API_KEY": "eonk_live_..." }
+      "env": { "EONIK_API_KEY": "eonk_live_...", "EONIK_BRAND_ID": "..." }
     }
   }
 }
 ```
+
+`EONIK_BRAND_ID` est obligatoire si vous avez plusieurs marques : eonik ne devine jamais de quel client il s'agit.
 
 [Télécharger pour Mac](https://www.eonik.ai/download) · éditeur gratuit · macOS 15+ · Apple silicon

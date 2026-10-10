@@ -14,7 +14,9 @@
   </p>
 </div>
 
-eonik entrega **anúncios prontos e on-brand, sem o trabalho braçal.** O corte é feito no app para Mac ([baixar](https://www.eonik.ai/download)). Este repositório liga Claude, Cursor ou Codex à mesma conta. O assistente lê e rascunha. **Nunca gasta. Você aprova cada corte.**
+Seu designer cria a peça-mestre. O eonik faz todos os tamanhos que o seu plano de mídia pede, fiéis à marca, no app eonik no seu Mac ([baixar](https://www.eonik.ai/download)). Peça pelo Claude, ChatGPT, Cursor, Codex ou VS Code: nada é criado, alterado ou enviado até você dizer.
+
+Conectar: adicione `https://api.eonik.ai/mcp` como conector e entre na sua conta. Para hosts que rodam servidores locais:
 
 ```json
 {
@@ -22,10 +24,12 @@ eonik entrega **anúncios prontos e on-brand, sem o trabalho braçal.** O corte 
     "eonik": {
       "command": "npx",
       "args": ["-y", "eonik-mcp"],
-      "env": { "EONIK_API_KEY": "eonk_live_..." }
+      "env": { "EONIK_API_KEY": "eonk_live_...", "EONIK_BRAND_ID": "..." }
     }
   }
 }
 ```
+
+`EONIK_BRAND_ID` é obrigatório se você tiver mais de uma marca: o eonik nunca adivinha de qual cliente é o trabalho.
 
 [Baixar para Mac](https://www.eonik.ai/download) · editor grátis · macOS 15+ · Apple silicon

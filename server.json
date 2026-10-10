@@ -2,26 +2,26 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "ai.eonik/mcp",
   "title": "eonik",
-  "description": "Finished, on-brand ads without the busywork. Connect Claude, Cursor, or Codex. Never spends.",
+  "description": "eonik's adapts in your assistant: every size of a creative, on-brand, checked, approved and delivered, made in the eonik app on your Mac.",
   "websiteUrl": "https://www.eonik.ai/mcp",
   "repository": {
     "url": "https://github.com/eonik-ai/eonik-mcp",
     "source": "github"
   },
-  "version": "2.0.0",
+  "version": "3.0.0",
   "packages": [
     {
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
       "identifier": "eonik-mcp",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "transport": {
         "type": "stdio"
       },
       "environmentVariables": [
         {
           "name": "EONIK_API_KEY",
-          "description": "eonik workspace API key or session token",
+          "description": "An eonik API key (Settings, API keys)",
           "isRequired": true,
           "isSecret": true
         },
@@ -33,7 +33,7 @@
         },
         {
           "name": "EONIK_BRAND_ID",
-          "description": "Optional brand workspace id",
+          "description": "The brand this connection is about. Required if you have more than one.",
           "isRequired": false,
           "isSecret": false
         }

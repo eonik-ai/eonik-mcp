@@ -3,3 +3,10 @@ build/
 .env
 .DS_Store
 .registry/
+
+# Internal review artefacts, generated from the private server (`python -m ops.mcp_submission`) and the skill
+# repo. Never published: they carry our listing copy and reviewer test cases.
+chatgpt-app-submission.json
+eonik-skill.zip
+eonik-chatgpt-plugin.zip
+eonik-chatgpt-plugin-new.zip

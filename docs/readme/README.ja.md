@@ -14,7 +14,9 @@
   </p>
 </div>
 
-eonik は**完成されたオンブランド広告を、雑務なしで**届けます。カットは Mac アプリで作ります（[ダウンロード](https://www.eonik.ai/download)）。このリポジトリは Claude、Cursor、Codex を同じアカウントにつなぎます。アシスタントは読み、下書きします。**支出はしません。カットの承認はあなたです。**
+デザイナーがマスターを作り、eonik がメディアプランに必要なすべてのサイズを、ブランドに沿って Mac の eonik アプリで作ります（[ダウンロード](https://www.eonik.ai/download)）。Claude、ChatGPT、Cursor、Codex、VS Code から依頼できます。あなたが決めるまで、何も作成・変更・送信されません。
+
+接続：`https://api.eonik.ai/mcp` をコネクタとして追加し、サインインします。ローカルサーバーを実行するホストの場合：
 
 ```json
 {
@@ -22,10 +24,12 @@ eonik は**完成されたオンブランド広告を、雑務なしで**届け�
     "eonik": {
       "command": "npx",
       "args": ["-y", "eonik-mcp"],
-      "env": { "EONIK_API_KEY": "eonk_live_..." }
+      "env": { "EONIK_API_KEY": "eonk_live_...", "EONIK_BRAND_ID": "..." }
     }
   }
 }
 ```
+
+ブランドが複数ある場合は `EONIK_BRAND_ID` が必須です。eonik がどのクライアントの作業かを推測することはありません。
 
 [Mac 版をダウンロード](https://www.eonik.ai/download) · エディタ無料 · macOS 15+ · Apple silicon

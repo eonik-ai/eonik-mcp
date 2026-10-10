@@ -14,7 +14,9 @@
   </p>
 </div>
 
-eonik 帮你做出**成品、符合品牌的广告，少做杂活。**成片在 Mac 应用里完成（[下载](https://www.eonik.ai/download)）。本仓库把 Claude、Cursor 或 Codex 接到同一账户。助手读取并起草。**从不花钱。每一刀由你拍板。**
+设计师制作主稿，eonik 在你 Mac 上的 eonik 应用中，按品牌规范制作投放计划所需的每一个尺寸（[下载](https://www.eonik.ai/download)）。可以从 Claude、ChatGPT、Cursor、Codex 或 VS Code 发起：在你确认之前，不会制作、修改或发送任何内容。
+
+连接：将 `https://api.eonik.ai/mcp` 添加为连接器并登录。对于运行本地服务器的客户端：
 
 ```json
 {
@@ -22,10 +24,12 @@ eonik 帮你做出**成品、符合品牌的广告，少做杂活。**成片在 
     "eonik": {
       "command": "npx",
       "args": ["-y", "eonik-mcp"],
-      "env": { "EONIK_API_KEY": "eonk_live_..." }
+      "env": { "EONIK_API_KEY": "eonk_live_...", "EONIK_BRAND_ID": "..." }
     }
   }
 }
 ```
+
+如果你有多个品牌，必须设置 `EONIK_BRAND_ID`：eonik 从不猜测这是哪个客户的工作。
 
 [下载 Mac 版](https://www.eonik.ai/download) · 编辑器永久免费 · macOS 15+ · Apple silicon

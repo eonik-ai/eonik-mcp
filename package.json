@@ -1,7 +1,7 @@
 {
   "name": "eonik-mcp",
-  "version": "2.0.0",
-  "description": "Finished, on-brand ads without the busywork. Connect Claude, Cursor, or Codex to your eonik account. The assistant reads and drafts; it never spends.",
+  "version": "3.0.0",
+  "description": "eonik in Claude Desktop, Cursor, Codex and VS Code: make adapts of a creative, revise them, check, send for approval and deliver, run in your own eonik app on your Mac.",
   "main": "build/index.js",
   "type": "module",
   "bin": {
@@ -19,13 +19,10 @@
     "mcp",
     "model-context-protocol",
     "eonik",
-    "ads",
-    "meta-ads",
-    "claude",
-    "cursor",
-    "codex",
+    "adapts",
+    "resize",
     "brand",
-    "creative-brief"
+    "creative"
   ],
   "license": "MIT",
   "mcpName": "ai.eonik/mcp",
@@ -40,9 +37,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.0.1",
-    "axios": "^1.7.2",
-    "dotenv": "^16.4.5"
+    "@modelcontextprotocol/sdk": "1.30.1"
   },
   "devDependencies": {
     "@types/node": "^20.14.9",

@@ -1,157 +1,127 @@
 #!/usr/bin/env node
 /**
- * eonik MCP (stdio) — thin authenticated bridge to the ONE tool layer.
+ * eonik MCP (stdio): a local bridge to eonik's ONE external server, https://api.eonik.ai/mcp.
  *
- * Authority: eonik-backend `command_tools.py` via
- *   GET  /api/tools/manifest
- *   POST /api/tools/dispatch
+ * For hosts that run MCP servers as local processes (Claude Desktop's config file, Cursor, Codex,
+ * older VS Code setups). It forwards everything to the remote server as it is: the tools (eonik's
+ * job tools and research reads, exactly the curated surface every other host is served), the
+ * panel resource, the prompts, and the remote's questions to the person (forms). It invents
+ * nothing, filters nothing and adds no tool of its own.
  *
- * This package must not invent tools. ListTools is the live catalog.
- * CallTool is dispatch. Banned budget/launch/orchestration routes do not exist here.
+ * ⚠️ IT USED TO PROXY `/api/tools/manifest`: the in-editor agent's whole tool layer, 60 tools,
+ * steering descriptions and all. That is the surface OpenAI rejected on `/mcp`; it stayed live
+ * here after `/mcp` was cut down, because this package read a different door (found 2026-10-08).
+ * One external surface now, and this is a pipe to it.
  *
- * Two MCP surfaces exist; this is the CLOUD brand-brain:
- *   A. this process → api.eonik.ai (Claude Desktop / Cursor / Codex)
- *   B. Mac app local MCP (127.0.0.1) — editor timeline + the same brand-brain proxied
+ * Auth is an eonik API key (`EONIK_API_KEY`). A key has no connect step, so it names its brand
+ * on every request (`EONIK_BRAND_ID`); a person with more than one brand must set it.
  */
+import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import {
   CallToolRequestSchema,
+  ElicitRequestSchema,
+  GetPromptRequestSchema,
+  ListPromptsRequestSchema,
+  ListResourcesRequestSchema,
+  ListResourceTemplatesRequestSchema,
   ListToolsRequestSchema,
-  ErrorCode,
-  McpError,
+  ReadResourceRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
-import axios, { AxiosError } from "axios";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 const API_URL = (process.env.EONIK_API_URL || "https://api.eonik.ai").replace(/\/$/, "");
 const API_KEY = process.env.EONIK_API_KEY;
 const BRAND_ID = process.env.EONIK_BRAND_ID;
+const VERSION = "3.0.0";
+/**
+ * How long one call may run through the bridge. A Desk job is followed within its call (each step
+ * reported as progress, the person's forms asked mid-call) for up to 200 s; the SDK's 60 s default
+ * cut such a call off half way. Hosts end a call at 240 s, so the bridge waits as long as they do,
+ * and every progress report restarts the clock.
+ */
+const CALL_TIMEOUT_MS = 240_000;
 
 if (!API_KEY) {
-  console.error("EONIK_API_KEY is required (workspace API key or session JWT).");
+  console.error("EONIK_API_KEY is required: create one in eonik, Settings, API keys.");
   process.exit(1);
 }
 
-/**
- * Tools the backend registry implements that an EXTERNAL agent must not be offered.
- *
- * `record_validation_decision` writes at `revealed` (marketer's own UI action). Advertising
- * it to an agent would let the model speak in the marketer's voice — BrandBrainTools.swift
- * keeps it off the in-editor agent for the same reason.
- *
- * `save_creative_read` is the Mac app's on-device contribution loop (scenes from the
- * device analyzer). A remote agent has no on-device read; offering it would let it inject
- * corpus facts.
- */
-const AGENT_EXCLUDED = new Set([
-  "record_validation_decision",
-  "save_creative_read",
-]);
+const headers: Record<string, string> = { "X-API-Key": API_KEY };
+if (BRAND_ID) headers["X-Brand-Id"] = BRAND_ID;
 
-const apiClient = axios.create({
-  baseURL: API_URL,
-  headers: {
-    "Content-Type": "application/json",
-    "X-API-Key": API_KEY,
-    Authorization: `Bearer ${API_KEY}`,
-    ...(BRAND_ID ? { "X-Brand-Id": BRAND_ID } : {}),
-  },
-});
+// Created once the host has introduced itself, so it declares what THAT host can do: forms, and
+// panels. The server lists its decision tools only to a client that declared panels, so a bridge
+// that spoke for itself would hide them from a host that renders them (or, worse, show them to
+// one that does not).
+let remote: Client;
 
-type ManifestTool = {
-  name: string;
-  description?: string;
-  parameters?: Record<string, unknown>;
-};
-
-async function loadManifest(): Promise<ManifestTool[]> {
-  const response = await apiClient.get("/api/tools/manifest");
-  const tools = response.data?.tools;
-  if (!Array.isArray(tools)) {
-    throw new Error("GET /api/tools/manifest did not return {tools: [...]}");
-  }
-  return tools.filter(
-    (t: ManifestTool) => typeof t?.name === "string" && !AGENT_EXCLUDED.has(t.name)
-  );
-}
-
-function axiosErrorText(error: AxiosError): string {
-  const data = error.response?.data;
-  if (data == null) return error.message;
-  return typeof data === "string" ? data : JSON.stringify(data);
-}
-
-const server = new Server(
-  {
-    name: "eonik",
-    version: "2.0.0",
-  },
-  {
-    capabilities: { tools: {} },
-  }
+const local = new Server(
+  { name: "eonik", version: VERSION },
+  { capabilities: { tools: {}, resources: {}, prompts: {} } },
 );
 
-server.setRequestHandler(ListToolsRequestSchema, async () => {
-  try {
-    const tools = await loadManifest();
-    return {
-      tools: tools.map((t) => ({
-        name: t.name,
-        description: t.description || "",
-        inputSchema: (t.parameters || {
-          type: "object",
-          properties: {},
-        }) as Record<string, unknown>,
-      })),
-    };
-  } catch (error) {
-    const msg = axios.isAxiosError(error) ? axiosErrorText(error) : String(error);
-    throw new McpError(
-      ErrorCode.InternalError,
-      `Could not load eonik tool catalog from ${API_URL}/api/tools/manifest: ${msg}`
-    );
-  }
+// Requests from the host, forwarded unchanged, once the remote connection (made with the host's
+// own capabilities) is up.
+const via = async () => (await connected(), remote);
+local.setRequestHandler(ListToolsRequestSchema, async (r) => (await via()).listTools(r.params));
+local.setRequestHandler(CallToolRequestSchema, async (r, extra) => {
+  // The host's own progress token, carried through: the remote's progress reaches the host under it.
+  const { progressToken, ...meta } = r.params._meta ?? {};
+  const params = Object.keys(meta).length ? { ...r.params, _meta: meta } : { ...r.params, _meta: undefined };
+  return (await via()).callTool(params, undefined, {
+    timeout: CALL_TIMEOUT_MS,
+    resetTimeoutOnProgress: true,
+    signal: extra.signal,
+    onprogress: progressToken === undefined ? undefined : (p) =>
+      extra.sendNotification({ method: "notifications/progress", params: { ...p, progressToken } }),
+  });
 });
+local.setRequestHandler(ListResourcesRequestSchema,
+  async (r) => (await via()).listResources(r.params));
+local.setRequestHandler(ListResourceTemplatesRequestSchema,
+  async (r) => (await via()).listResourceTemplates(r.params));
+local.setRequestHandler(ReadResourceRequestSchema,
+  async (r) => (await via()).readResource(r.params));
+local.setRequestHandler(ListPromptsRequestSchema, async (r) => (await via()).listPrompts(r.params));
+local.setRequestHandler(GetPromptRequestSchema, async (r) => (await via()).getPrompt(r.params));
 
-server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  const name = request.params.name;
-  if (AGENT_EXCLUDED.has(name)) {
-    throw new McpError(
-      ErrorCode.InvalidParams,
-      `${name} is not offered on the remote MCP bridge (Mac-app / UI-owned).`
-    );
+// The remote's questions to the PERSON (which sizes, which answer) are put to them by the host
+// (`connectRemote`). A host without forms declines, and eonik then says the choice in plain words.
+
+async function connectRemote() {
+  const declared = (local.getClientCapabilities() ?? {}) as Record<string, unknown>;
+  const capabilities: Record<string, unknown> = {};
+  if (declared.elicitation) capabilities.elicitation = declared.elicitation;
+  if (declared.extensions) capabilities.extensions = declared.extensions;
+  if (declared.experimental) capabilities.experimental = declared.experimental;
+  // The host's own name, so eonik records which assistant asked (Claude, Cursor, Codex).
+  const host = local.getClientVersion()?.name ?? "eonik-mcp-bridge";
+  remote = new Client({ name: host, version: VERSION }, { capabilities: capabilities as never });
+  // Only a host that has forms is told the remote's questions; the SDK refuses the handler
+  // otherwise, which is right: the server then says the choice in plain words.
+  if (capabilities.elicitation) {
+    // A person reading eonik's review takes as long as they take: the form waits as long as a call may.
+    remote.setRequestHandler(ElicitRequestSchema,
+      (req) => local.elicitInput(req.params, { timeout: CALL_TIMEOUT_MS }));
   }
-  try {
-    const response = await apiClient.post("/api/tools/dispatch", {
-      tool: name,
-      args: request.params.arguments ?? {},
-    });
-    const payload = response.data?.result ?? response.data;
-    return {
-      content: [{ type: "text" as const, text: JSON.stringify(payload, null, 2) }],
-      isError: Boolean(payload && typeof payload === "object" && "error" in payload),
-    };
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      return {
-        content: [{ type: "text" as const, text: `API Error: ${axiosErrorText(error)}` }],
-        isError: true,
-      };
-    }
-    throw error;
-  }
-});
+  await remote.connect(new StreamableHTTPClientTransport(new URL(`${API_URL}/mcp`),
+    { requestInit: { headers } }));
+}
+
+let ready: Promise<void> | undefined;
+const connected = () => (ready ??= connectRemote());
 
 async function main() {
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
-  console.error(`eonik MCP 2.0.0 → ${API_URL} (stdio)`);
+  local.oninitialized = () => {
+    connected().catch((e) => console.error(`eonik MCP: ${e?.message ?? e}`));
+  };
+  await local.connect(new StdioServerTransport());
+  console.error(`eonik MCP ${VERSION}: bridging stdio to ${API_URL}/mcp`);
 }
 
 main().catch((error) => {
-  console.error("Fatal error starting eonik MCP:", error);
+  console.error(`eonik MCP could not reach ${API_URL}/mcp: ${error?.message ?? error}`);
   process.exit(1);
 });
