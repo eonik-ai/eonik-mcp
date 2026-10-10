@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "ai.eonik/mcp",
   "title": "eonik",
-  "description": "eonik's adapts in your assistant: every size of a creative, on-brand, checked, approved and delivered, made in the eonik app on your Mac.",
+  "description": "Every size of a brand's ad, on-brand, checked and delivered, made in the eonik app on your Mac.",
   "websiteUrl": "https://www.eonik.ai/mcp",
   "repository": {
     "url": "https://github.com/eonik-ai/eonik-mcp",
