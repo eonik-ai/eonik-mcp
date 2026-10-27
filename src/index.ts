@@ -34,7 +34,7 @@ import {
 const API_URL = (process.env.EONIK_API_URL || "https://api.eonik.ai").replace(/\/$/, "");
 const API_KEY = process.env.EONIK_API_KEY;
 const BRAND_ID = process.env.EONIK_BRAND_ID;
-const VERSION = "3.0.0";
+const VERSION = "4.0.0";
 /**
  * How long one call may run through the bridge. A Desk job is followed within its call (each step
  * reported as progress, the person's forms asked mid-call) for up to 200 s; the SDK's 60 s default

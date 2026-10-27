@@ -1,6 +1,6 @@
 {
   "name": "eonik-mcp",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "eonik in Claude Desktop, Cursor, Codex and VS Code: make adapts of a creative, revise them, check, send for approval and deliver, run in your own eonik app on your Mac.",
   "main": "build/index.js",
   "type": "module",
@@ -28,7 +28,7 @@
   "mcpName": "ai.eonik/mcp",
   "files": [
     "build",
-    "README.md"
+    "README.md", "CHANGELOG.md"
   ],
   "scripts": {
     "build": "tsc",

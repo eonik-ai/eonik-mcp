@@ -43,15 +43,21 @@ your computer. Nothing is made, changed or sent until you say so.
 ## What you can ask
 
 - *"Where are we?"* What needs you, what is being made, what the client sent back.
-- *"Adapt Elevation to the Bliss set, and add 1080x617."* eonik makes every size and shows you
+- *"Adapt the spring master to the launch set, and add 1080x617."* eonik makes every size and shows you
   each one before anything is final.
 - *"Make the logo bigger on 300x250"* · *"Use the evening photo on every size."*
-- *"Is this OK to send?"* The brand's rules on every size: the project's RERA line, the mark,
+- *"Is this OK to send?"* The brand's rules on every size: the project's legal line, the mark,
   the typeface, the smallest text, file-size limits.
-- *"Send it to the client"* · *"What did Godrej say?"*
-- *"Kada Agrahara got its RERA number: PRM/KA/RERA/…"* eonik saves it and prepares every
+- *"Send it to the client"* · *"What did the client say?"*
+- *"The tower project got its RERA number."* eonik saves it and prepares every
   creative that prints the old value.
-- *"Check these Meta headlines"* · *"Package Bliss Set5 for media."*
+- *"Check these Meta headlines"* · *"Package the launch set for media."*
+- *"Make the headline shorter on every size"* · *"Undo that."*
+- *"A Hindi version of this"* · *"The same ad with an older couple."*
+- *"An ad for the summer sale."* eonik writes the script and shows what it costs to make;
+  nothing is made until you approve it.
+- *"Recreate this ad with our product."* · *"Check this zip against the media plan."*
+- *"My brand files are in this folder, bring them in."* · *"What did my assistant do today?"*
 
 ## What it never does
 
