@@ -19,7 +19,9 @@ browser the first time; never ask them for a password or a key in the chat.
 The server's own guide is the resource `eonik://guide/set-up`. In short:
 
 1. `get_setup`: where their eonik stands, their brands, their plan, and the one next step.
-2. No brand yet: ask for the website if they have not said it, then `create_brand`.
+2. No brand yet: ask for the website if they have not said it, then `create_brand`. In ChatGPT
+   this works before sign-in: eonik shows what it read and asks the person to sign in; then call
+   `create_brand` again. Nothing else answers before sign-in.
    Several brands and none chosen: ask which, then `use_brand`.
 3. `add_competitors` with every competitor they name, each as their Ads Library or Instagram link
    or their name exactly as said. A name comes back as the page the Ad Library shows: ask the

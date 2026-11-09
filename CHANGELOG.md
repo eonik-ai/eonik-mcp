@@ -26,6 +26,10 @@ right tool more often. Tool names changed: a host that saved 4.0's names lists t
   the brand this conversation works on; they sign in there and choose the ad account on eonik.ai.
   It says first when the account is already connected or the plan has no ad platform left.
 - A **guide** for setting eonik up (`eonik://guide/set-up`).
+- **In ChatGPT, a brand can be read before sign-in**, as on eonik.ai: `create_brand` shows what eonik
+  read from the site and opens ChatGPT's sign-in to eonik; nothing is saved until the person signs
+  in. Every other tool, the ad library included, asks them to sign in first. Each tool declares
+  which it is (`securitySchemes`). Other assistants sign in as they connect, as before.
 
 - **`npx eonik-mcp init`** connects eonik to every assistant on the computer in one command:
   Claude Code, VS Code, Cursor and Codex, each the way that assistant documents, and says the
