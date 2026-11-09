@@ -1,6 +1,6 @@
 # Changelog
 
-## 5.0.0 (2026-11-08)
+## 5.0.0 (2026-11-09)
 
 An assistant can now set eonik up for a new person, and eonik lists 30 tools instead of 46: fewer,
 each covering one thing a person asks, so an assistant reads less before it works and picks the
@@ -27,6 +27,13 @@ right tool more often. Tool names changed: a host that saved 4.0's names lists t
   It says first when the account is already connected or the plan has no ad platform left.
 - A **guide** for setting eonik up (`eonik://guide/set-up`).
 
+- **`npx eonik-mcp init`** connects eonik to every assistant on the computer in one command:
+  Claude Code, VS Code, Cursor and Codex, each the way that assistant documents, and says the
+  steps for Claude Desktop. No key is copied; each assistant signs you in the first time it uses
+  eonik. `--dry-run` shows what it would do and changes nothing.
+- The registry entry lists the hosted server (`remotes`), so a registry client can connect to
+  `https://api.eonik.ai/mcp` with sign-in, without the local bridge.
+
 ### Changed: one tool for each question
 
 | 5.0 | Replaces |
@@ -47,6 +54,13 @@ right tool more often. Tool names changed: a host that saved 4.0's names lists t
 - eonik never guesses which brand a connection is about: with no brand chosen, nothing falls
   back to the most recently updated one.
 - Tool schemas carry only the words written for each parameter.
+- Any member of a workspace may connect the brand's ad account; a viewer may not, and
+  `connect_source` says so instead of handing over a link.
+- Six tools that may reach outside eonik now say so (`openWorldHint`): `create_brand` reads a
+  website, `add_competitors` searches public ad libraries, `invite_teammates` sends an email, and
+  `make_adapts`, `change_creative` and `onboard_brand` may ask the assistant the person chose in
+  eonik.
+- `EONIK_BRAND_ID` is optional: with more than one brand, you choose in the conversation.
 
 ## 4.0.0 (2026-10-27)
 

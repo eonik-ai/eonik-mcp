@@ -13,13 +13,18 @@
  * here after `/mcp` was cut down, because this package read a different door (found 2026-10-08).
  * One external surface now, and this is a pipe to it.
  *
- * Auth is an eonik API key (`EONIK_API_KEY`). A key has no connect step, so it names its brand
- * on every request (`EONIK_BRAND_ID`); a person with more than one brand must set it.
+ * Auth is an eonik API key (`EONIK_API_KEY`). A key may name its brand (`EONIK_BRAND_ID`); without
+ * one, the person chooses in the conversation (`use_brand`, 5.0), and eonik never guesses.
+ *
+ * `npx eonik-mcp init` connects every assistant on this computer to the remote server directly
+ * (`init.ts`): no key, each host signs the person in. This bridge is for hosts that need a local
+ * process.
  */
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { init } from "./init.js";
 import {
   CallToolRequestSchema,
   ElicitRequestSchema,
@@ -42,6 +47,8 @@ const VERSION = "5.0.0";
  * and every progress report restarts the clock.
  */
 const CALL_TIMEOUT_MS = 240_000;
+
+if (process.argv[2] === "init") process.exit(init(process.argv.slice(3)));
 
 if (!API_KEY) {
   console.error("EONIK_API_KEY is required: create one in eonik, Settings, API keys.");

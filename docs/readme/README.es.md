@@ -14,9 +14,9 @@
   </p>
 </div>
 
-Tu diseñador crea el máster. eonik hace todos los tamaños que pide tu plan de medios, fieles a la marca, en la app de eonik en tu Mac ([descargar](https://www.eonik.ai/download)). Pídelo desde Claude, ChatGPT, Cursor, Codex o VS Code: nada se crea, cambia ni envía hasta que tú lo digas.
+eonik vigila los anuncios de tus competidores, lee los tuyos y hace todos los tamaños de un anuncio, fieles a la marca, en la app de eonik en tu Mac ([descargar](https://www.eonik.ai/download)). Pídelo desde Claude, ChatGPT, Cursor, Codex o VS Code: configurar la marca, los competidores y tus propios anuncios funcionan desde cualquier asistente; crear y adaptar tamaños se hace en tu Mac. Nada se crea, cambia ni envía hasta que tú lo digas.
 
-Conectar: añade `https://api.eonik.ai/mcp` como conector e inicia sesión. Para hosts que ejecutan servidores locales:
+Conectar todos tus asistentes con un comando: `npx eonik-mcp init` (cada asistente te pide iniciar sesión en eonik la primera vez; no se copia ninguna clave). O añade `https://api.eonik.ai/mcp` como conector e inicia sesión. Para hosts que necesitan un proceso local:
 
 ```json
 {
@@ -24,12 +24,12 @@ Conectar: añade `https://api.eonik.ai/mcp` como conector e inicia sesión. Para
     "eonik": {
       "command": "npx",
       "args": ["-y", "eonik-mcp"],
-      "env": { "EONIK_API_KEY": "eonk_live_...", "EONIK_BRAND_ID": "..." }
+      "env": { "EONIK_API_KEY": "eonk_live_..." }
     }
   }
 }
 ```
 
-`EONIK_BRAND_ID` es obligatorio si tienes más de una marca: eonik nunca adivina de qué cliente es el trabajo.
+`EONIK_BRAND_ID` es opcional: si tienes más de una marca, eliges en la conversación, y eonik nunca adivina de qué cliente es el trabajo.
 
 [Descargar para Mac](https://www.eonik.ai/download) · editor gratis · macOS 15+ · Apple silicon

@@ -14,9 +14,9 @@
   </p>
 </div>
 
-デザイナーがマスターを作り、eonik がメディアプランに必要なすべてのサイズを、ブランドに沿って Mac の eonik アプリで作ります（[ダウンロード](https://www.eonik.ai/download)）。Claude、ChatGPT、Cursor、Codex、VS Code から依頼できます。あなたが決めるまで、何も作成・変更・送信されません。
+eonik は競合の広告を見守り、あなた自身の広告を読み、Mac の eonik アプリで広告のすべてのサイズをブランドどおりに作ります（[ダウンロード](https://www.eonik.ai/download)）。Claude、ChatGPT、Cursor、Codex、VS Code から頼めます。ブランドの設定、競合、自社の広告はどのアシスタントからでも使えます。制作とサイズ展開は Mac で行います。あなたが言うまで、何も作られず、変更も送信もされません。
 
-接続：`https://api.eonik.ai/mcp` をコネクタとして追加し、サインインします。ローカルサーバーを実行するホストの場合：
+すべてのアシスタントを 1 つのコマンドで接続：`npx eonik-mcp init`（各アシスタントが初回に eonik へのサインインを求めます。キーのコピーは不要です）。または `https://api.eonik.ai/mcp` をコネクタとして追加してサインインします。ローカルプロセスが必要なホストの場合：
 
 ```json
 {
@@ -24,12 +24,12 @@
     "eonik": {
       "command": "npx",
       "args": ["-y", "eonik-mcp"],
-      "env": { "EONIK_API_KEY": "eonk_live_...", "EONIK_BRAND_ID": "..." }
+      "env": { "EONIK_API_KEY": "eonk_live_..." }
     }
   }
 }
 ```
 
-ブランドが複数ある場合は `EONIK_BRAND_ID` が必須です。eonik がどのクライアントの作業かを推測することはありません。
+`EONIK_BRAND_ID` は任意です。ブランドが複数あれば会話の中で選びます。eonik はどのクライアントの作業かを推測しません。
 
-[Mac 版をダウンロード](https://www.eonik.ai/download) · エディタ無料 · macOS 15+ · Apple silicon
+[Mac 版をダウンロード](https://www.eonik.ai/download) · エディタは無料 · macOS 15+ · Apple silicon

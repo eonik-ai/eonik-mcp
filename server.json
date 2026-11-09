@@ -2,13 +2,19 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "ai.eonik/mcp",
   "title": "eonik",
-  "description": "Every size of a brand's ad, on-brand, checked and delivered, made in the eonik app on your Mac.",
+  "description": "Set up eonik, watch competitors, read your own ads and make every size of an ad, from any assistant.",
   "websiteUrl": "https://www.eonik.ai/mcp",
   "repository": {
     "url": "https://github.com/eonik-ai/eonik-mcp",
     "source": "github"
   },
   "version": "5.0.0",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://api.eonik.ai/mcp"
+    }
+  ],
   "packages": [
     {
       "registryType": "npm",
@@ -33,7 +39,7 @@
         },
         {
           "name": "EONIK_BRAND_ID",
-          "description": "The brand this connection is about. Required if you have more than one.",
+          "description": "The brand this connection is about. Optional: without it you choose in the conversation.",
           "isRequired": false,
           "isSecret": false
         }

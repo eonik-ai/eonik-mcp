@@ -1,7 +1,7 @@
 {
   "name": "eonik-mcp",
   "version": "5.0.0",
-  "description": "eonik in Claude Desktop, Cursor, Codex and VS Code: make adapts of a creative, revise them, check, send for approval and deliver, run in your own eonik app on your Mac.",
+  "description": "eonik in Claude, ChatGPT, Cursor, Codex and VS Code: set eonik up for your brand, watch competitors' ads, read your own, and make every size of an ad on-brand in the eonik app on your Mac. `npx eonik-mcp init` connects them all.",
   "main": "build/index.js",
   "type": "module",
   "bin": {
@@ -19,17 +19,21 @@
     "mcp",
     "model-context-protocol",
     "eonik",
+    "ads",
+    "ad-creative",
+    "competitor-ads",
+    "ad-library",
     "adapts",
     "resize",
-    "brand",
-    "creative"
+    "brand"
   ],
   "license": "MIT",
   "mcpName": "ai.eonik/mcp",
   "files": [
     "build",
     "README.md",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "AGENTS.md"
   ],
   "scripts": {
     "build": "tsc",

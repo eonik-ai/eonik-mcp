@@ -4,7 +4,7 @@
   </a>
   <h1>eonik</h1>
   <p><strong>Finished, on-brand ads without the busywork.</strong></p>
-  <p>Your designer makes the master. eonik makes every size your media plan asks for, on-brand, in the eonik app on your Mac. Ask for it from Claude, ChatGPT, Cursor, Codex or VS Code. Nothing is made, changed or sent until you say so.</p>
+  <p>eonik watches your competitors' ads, reads your own, and makes every size of an ad on-brand in the eonik app on your Mac. Ask for it from Claude, ChatGPT, Cursor, Codex or VS Code. Nothing is made, changed or sent until you say so.</p>
   <p>
     <a href="https://www.eonik.ai">Website</a> ·
     <a href="https://www.eonik.ai/download">Download for Mac</a> ·
@@ -31,33 +31,36 @@
 
 ---
 
-eonik gets you **finished, on-brand ads without the busywork.** Your designer makes the master;
-eonik makes the adapts: every size a media plan asks for, with your brand's fonts, rules and
-layout kept the same way on every size, checked, sent for approval and delivered.
+eonik gets you **finished, on-brand ads without the busywork.** Your assistant can set eonik up
+for your brand, keep watch on the competitors you name, read how your own ads are doing, and have
+the eonik app on your Mac make every size of an ad, on-brand, checked, sent for approval and
+delivered. Nothing is made, changed or sent until you say so.
 
-The work runs in the **eonik app on your Mac** ([download](https://www.eonik.ai/download) · macOS
-15+ · Apple silicon), where your files and fonts are. Connect Claude, ChatGPT, Cursor, Codex or
-VS Code to it and ask in your own words; your assistant asks eonik, and eonik does the work on
-your computer. Nothing is made, changed or sent until you say so.
+Setting up, competitors and your own ads work from any assistant. Making and resizing runs in the
+**eonik app on your Mac** ([download](https://www.eonik.ai/download) · macOS 15+ · Apple
+silicon), where your files and fonts are.
 
 ## What you can ask
 
-- *"Where are we?"* What needs you, what is being made, what the client sent back.
-- *"Adapt the spring master to the launch set, and add 1080x617."* eonik makes every size and shows you
-  each one before anything is final.
-- *"Make the logo bigger on 300x250"* · *"Use the evening photo on every size."*
-- *"Is this OK to send?"* The brand's rules on every size: the project's legal line, the mark,
-  the typeface, the smallest text, file-size limits.
-- *"Send it to the client"* · *"What did the client say?"*
-- *"The tower project got its RERA number."* eonik saves it and prepares every
-  creative that prints the old value.
-- *"Check these Meta headlines"* · *"Package the launch set for media."*
-- *"Make the headline shorter on every size"* · *"Undo that."*
-- *"A Hindi version of this"* · *"The same ad with an older couple."*
-- *"An ad for the summer sale."* eonik writes the script and shows what it costs to make;
-  nothing is made until you approve it.
-- *"Recreate this ad with our product."* · *"Check this zip against the media plan."*
-- *"My brand files are in this folder, bring them in."* · *"What did my assistant do today?"*
+**Setting up**
+- *"Set eonik up for my brand, acme.com."* eonik reads your site and sets up the brand.
+- *"Watch Gymshark and this Ads Library link for us."* A link is added at once; a name comes back
+  as the page the Ad Library shows, for you to confirm.
+- *"Invite sam@acme.com."* · *"Connect our Meta ad account."* · *"What plan are we on?"*
+
+**Research**
+- *"What did our competitors change this week?"* · *"Break that ad down, scene by scene."*
+- *"How are our own ads doing?"* · *"What have we already tested?"*
+- *"Remember: we never show the old logo."*
+
+**The work** (in the eonik app on your Mac)
+- *"Where are we?"* What needs you, what is being made, what the client said.
+- *"Adapt the spring master to the launch set, and add 1080x617."* eonik makes every size and shows
+  you each one before anything is final.
+- *"Make the logo bigger on 300x250"* · *"Undo that."* · *"A Hindi version of this."*
+- *"Is this OK to send?"* · *"Check this zip against the media plan."* · *"Send it to the client."*
+- *"An ad for the summer sale"* · *"Recreate this ad with our product."* eonik shows what it will
+  cost first; nothing is made until you approve it.
 
 ## What it never does
 
@@ -67,10 +70,20 @@ sending past a rule finding. Those are buttons you press, in eonik's panel or in
 
 ## Connect
 
-**Claude (claude.ai, Desktop), ChatGPT, VS Code:** add the connector `https://api.eonik.ai/mcp`
-and sign in with your eonik account; you choose the brand when you connect.
+**Every assistant on this computer, in one command:**
 
-**Hosts that run local servers** (Claude Desktop's config file, Cursor, Codex): this package
+```sh
+npx eonik-mcp init
+```
+
+It adds eonik to Claude Code, VS Code, Cursor and Codex, each the way that assistant documents,
+and says what to do in Claude Desktop. No key is copied: each assistant signs you in to eonik the
+first time it uses it. `npx eonik-mcp init --dry-run` shows what it would do and changes nothing.
+
+**Claude (claude.ai, Desktop), ChatGPT, VS Code by hand:** add the connector
+`https://api.eonik.ai/mcp` and sign in with your eonik account.
+
+**Hosts that need a local process** (Claude Desktop's config file, older setups): this package
 bridges them to the same server.
 
 1. Create an API key in eonik (Settings, API keys).
@@ -83,20 +96,18 @@ bridges them to the same server.
       "command": "npx",
       "args": ["-y", "eonik-mcp"],
       "env": {
-        "EONIK_API_KEY": "eonk_live_...",
-        "EONIK_BRAND_ID": "the brand this connection is about"
+        "EONIK_API_KEY": "eonk_live_..."
       }
     }
   }
 }
 ```
 
-`EONIK_BRAND_ID` is required if you have more than one brand: eonik never guesses which client's
-work you mean, and tells you the choices if it is missing. `EONIK_API_URL` defaults to
-`https://api.eonik.ai`.
+`EONIK_BRAND_ID` is optional: with more than one brand, you choose in the conversation, and eonik
+never guesses which client's work you mean. `EONIK_API_URL` defaults to `https://api.eonik.ai`.
 
 The bridge forwards exactly what the server offers (tools, the panel, prompts and eonik's
-questions to you) and adds nothing of its own. Keep eonik open on your Mac while you work.
+questions to you) and adds nothing of its own.
 
 ## Security
 
