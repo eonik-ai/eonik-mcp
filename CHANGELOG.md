@@ -34,7 +34,11 @@ right tool more often. Tool names changed: a host that saved 4.0's names lists t
 - **`npx eonik-mcp init`** connects eonik to every assistant on the computer in one command:
   Claude Code, VS Code, Cursor and Codex, each the way that assistant documents, and says the
   steps for Claude Desktop. No key is copied; each assistant signs you in the first time it uses
-  eonik. `--dry-run` shows what it would do and changes nothing.
+  eonik. `--dry-run` shows what it would do and changes nothing. Codex asks you to sign in while
+  `init` runs, in the same terminal; if you do not finish, `init` says so and names
+  `codex mcp login eonik`.
+- **Assistants on your computer can sign in to eonik.** Claude Code, Codex, Cursor and VS Code
+  return from the sign-in to a port on your computer, which eonik refused until now.
 - The registry entry lists the hosted server (`remotes`), so a registry client can connect to
   `https://api.eonik.ai/mcp` with sign-in, without the local bridge.
 

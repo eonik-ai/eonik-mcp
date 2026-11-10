@@ -11,7 +11,13 @@
  *   Claude Code  `claude mcp add --transport http --scope user eonik <url>`  (code.claude.com/docs/en/mcp)
  *   VS Code      `code --add-mcp '{"name":…,"type":"http","url":…}'`         (code.visualstudio.com, MCP)
  *   Cursor       ~/.cursor/mcp.json  {"mcpServers": {"eonik": {"url": …}}}    (cursor.com/docs/context/mcp)
- *   Codex        `codex mcp add eonik --url <url>`, then `codex mcp login`   (Codex MCP docs)
+ *   Codex        `codex mcp add eonik --url <url>`, which starts the sign-in itself   (Codex MCP docs)
+ *
+ * ⚠️ CODEX SIGNS IN DURING `add` (codex-cli 0.166, 2026-11-10): it finds eonik's OAuth, prints a sign-in
+ * address and waits for the browser to come back. Run with its output captured, the person never saw the
+ * address, Codex timed out, and `init` reported "could not add eonik" for a server Codex HAD added. So
+ * Codex runs in the person's own terminal, and what happened is read back from Codex itself
+ * (`codex mcp list --json`: whether eonik is there, and its `auth_status`), never from its exit code.
  */
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
@@ -81,13 +87,42 @@ function cursor(dry: boolean): Outcome | null {
   return { host, said: "connected; Cursor signs you in the first time it uses eonik" };
 }
 
+type CodexServer = { name: string; transport?: { url?: string | null }; auth_status?: string };
+
+/** eonik as Codex has it, or null when Codex has no server by that name; undefined when Codex cannot say. */
+function codexEonik(): CodexServer | null | undefined {
+  const r = spawnSync("codex", ["mcp", "list", "--json"], { encoding: "utf8" });
+  if (r.status !== 0) return undefined;
+  try {
+    const servers = JSON.parse(r.stdout) as CodexServer[];
+    return servers.find((s) => s.name === NAME) ?? null;
+  } catch {
+    return undefined;
+  }
+}
+
+function codexSaid(server: CodexServer | null | undefined): string | null {
+  if (server === undefined) return null;
+  if (server === null) return `could not add eonik; add a server named ${NAME} with url ${MCP_URL}`;
+  if (server.transport?.url !== MCP_URL) {
+    return `left alone: Codex already has a server named ${NAME}, at ${server.transport?.url ?? "another address"}`;
+  }
+  return server.auth_status === "not_logged_in"
+    ? `added; sign in with \`codex mcp login ${NAME}\``
+    : "connected";
+}
+
 function codex(dry: boolean): Outcome | null {
   if (!has("codex")) return null;
   const host = "Codex";
-  if (dry) return { host, said: `would run: codex mcp add ${NAME} --url ${MCP_URL}` };
-  const r = run("codex", ["mcp", "add", NAME, "--url", MCP_URL]);
-  return { host, said: r.ok ? `connected; run \`codex mcp login ${NAME}\` once to sign in`
-    : `could not add eonik (${r.out || "no reason given"}); add a server named ${NAME} with url ${MCP_URL}` };
+  const before = codexEonik();
+  if (before) return { host, said: codexSaid(before) === "connected" ? "already connected" : codexSaid(before)! };
+  if (dry) return { host, said: `would run: codex mcp add ${NAME} --url ${MCP_URL} (Codex then asks you to sign in)` };
+  console.log("  Codex: adding eonik. Codex asks you to sign in to eonik in your browser:\n");
+  const r = spawnSync("codex", ["mcp", "add", NAME, "--url", MCP_URL], { stdio: "inherit" });
+  console.log("");
+  return { host, said: codexSaid(codexEonik()) ?? (r.status === 0 ? "connected"
+    : `could not tell whether eonik was added; run \`codex mcp list\``) };
 }
 
 function claudeDesktop(): Outcome | null {
@@ -105,9 +140,10 @@ function theMac(): string | null {
 
 export function init(argv: string[]): number {
   const dry = argv.includes("--dry-run");
+  // Said first: Codex signs the person in while `init` runs, in this terminal.
+  console.log(dry ? "eonik: what init would do (nothing is changed)\n" : "eonik: connecting your assistants\n");
   const found = [claudeCode(dry), vsCode(dry), cursor(dry), codex(dry), claudeDesktop()]
     .filter((o): o is Outcome => o !== null);
-  console.log(dry ? "eonik: what init would do (nothing is changed)\n" : "eonik: connecting your assistants\n");
   if (!found.length) {
     console.log(`No assistant found on this computer. In any assistant, add the connector ${MCP_URL} and sign in to eonik.`);
   }
