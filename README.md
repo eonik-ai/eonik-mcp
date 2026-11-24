@@ -76,12 +76,15 @@ sending past a rule finding. Those are buttons you press, in eonik's panel or in
 npx eonik-mcp init
 ```
 
-It adds eonik to Claude Code, VS Code, Cursor and Codex, each the way that assistant documents,
-and says what to do in Claude Desktop. No key is copied: each assistant signs you in to eonik the
-first time it uses it. `npx eonik-mcp init --dry-run` shows what it would do and changes nothing.
+It adds eonik to Claude Code, Codex, Gemini CLI, VS Code, Cursor and Windsurf, each the way that
+assistant documents, and says what to do in Claude Desktop, Zed and Perplexity. No key is copied:
+each assistant signs you in to eonik the first time it uses it. `npx eonik-mcp init --dry-run`
+shows what it would do and changes nothing.
 
-**Claude (claude.ai, Desktop), ChatGPT, VS Code by hand:** add the connector
-`https://api.eonik.ai/mcp` and sign in with your eonik account.
+**Any other assistant that adds MCP servers** (claude.ai, Perplexity, Grok, Le Chat, Copilot
+Studio, Muse and the rest): add `https://api.eonik.ai/mcp` as a custom connector and sign in with
+your eonik account. ChatGPT connects from eonik's listing. Each one's steps:
+[eonik.ai/mcp](https://www.eonik.ai/mcp).
 
 **Hosts that need a local process** (Claude Desktop's config file, older setups): this package
 bridges them to the same server.

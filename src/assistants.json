@@ -1,0 +1,145 @@
+{
+  "about": "Every assistant eonik knows by name, ONE list (24 Nov 2026). The backend reads it for the name on the sign-in page, which hosts may call /mcp from a browser, and which connections keep one refresh token; the website's /mcp page, `npx eonik-mcp init` and the Mac app are tested against it (stamped copies: python -m ops.assistants --write). Sign-in is open to any https return address or one on the person's own computer, so an assistant missing here still connects: the sign-in page names it by its site. `verified` is a real sign-in walked end to end, with its date; null means expected to work and not yet walked. `offered` is whether eonik's own pages teach it.",
+  "address": "https://api.eonik.ai/mcp",
+  "assistants": [
+    {
+      "id": "claude", "name": "Claude", "kind": "web", "offered": true,
+      "note": "claude.ai and Desktop",
+      "connect": {"how": "connector", "where": "Settings, Connectors, Add custom connector", "url": "https://claude.ai/settings/connectors"},
+      "callbackOrigins": ["https://claude.ai"],
+      "clientNames": ["claude-ai", "claude"],
+      "verified": {"on": "2026-08-24", "how": "walked end to end against a live connector (5e71d1c)"},
+      "sources": ["https://support.claude.com/en/articles/11175166-getting-started-with-custom-connectors-using-remote-mcp"]
+    },
+    {
+      "id": "chatgpt", "name": "ChatGPT", "kind": "web", "offered": true,
+      "note": "chatgpt.com",
+      "connect": {"how": "listing", "where": "eonik's listing in ChatGPT's apps", "url": "https://chatgpt.com/plugins/plugin_asdk_app_6aca11964e3c8191816c4ec1345c3e9a"},
+      "callbackOrigins": ["https://chatgpt.com", "https://chat.openai.com"],
+      "relayOrigins": ["https://platform.openai.com"],
+      "clientNames": ["openai-mcp", "chatgpt", "openai"],
+      "tryBeforeSignIn": true,
+      "verified": {"on": "2026-11-23", "how": "signed in on production (nginx log); the app is listed by OpenAI"},
+      "sources": ["https://developers.openai.com/apps-sdk/build/auth"]
+    },
+    {
+      "id": "muse", "name": "Muse", "kind": "web", "offered": true,
+      "note": "by Meta",
+      "connect": {"how": "connector", "where": "Settings, Connectors, Add custom connector"},
+      "callbackOrigins": ["https://muse.ai", "https://agent.meta.ai", "https://platform.muse.ai", "https://platform.museai.com"],
+      "clientNames": ["muse"],
+      "verified": {"on": "2026-11-06", "how": "Muse's credential check signed in on production"},
+      "sources": ["platform.muse.ai script bundle, read 2026-11-06"]
+    },
+    {
+      "id": "perplexity", "name": "Perplexity", "kind": "desktop", "offered": true,
+      "note": "Mac app, Pro and Max",
+      "connect": {"how": "connector", "where": "Settings, Connectors, Add custom remote connector, Streamable HTTP, sign in with OAuth"},
+      "callbackOrigins": ["https://www.perplexity.ai", "https://perplexity.ai"],
+      "clientNames": ["perplexity"],
+      "verified": null,
+      "sources": ["https://www.cdata.com/kb/tech/api-cloud-perplexity-mac-desktop.rst"]
+    },
+    {
+      "id": "grok", "name": "Grok", "kind": "web", "offered": true,
+      "note": "grok.com",
+      "connect": {"how": "connector", "where": "Connectors, New connector, Custom", "url": "https://grok.com/connectors"},
+      "callbackOrigins": [],
+      "clientNames": ["grok", "xai"],
+      "verified": null,
+      "sources": ["https://docs.x.ai/grok/connectors"]
+    },
+    {
+      "id": "lechat", "name": "Le Chat", "kind": "web", "offered": true,
+      "note": "by Mistral",
+      "connect": {"how": "connector", "where": "Intelligence, Connectors, Custom MCP Connector (a workspace admin adds it)", "url": "https://chat.mistral.ai"},
+      "callbackOrigins": [],
+      "clientNames": ["mistral", "le chat", "lechat"],
+      "verified": null,
+      "sources": ["https://docs.mistral.ai/le-chat/knowledge-integrations/connectors/mcp-connectors"]
+    },
+    {
+      "id": "copilotstudio", "name": "Copilot Studio", "kind": "web", "offered": true,
+      "note": "by Microsoft",
+      "connect": {"how": "connector", "where": "your agent, Tools, Add a tool, Model Context Protocol, then the address"},
+      "callbackOrigins": [],
+      "clientNames": ["copilot studio", "copilotstudio", "power platform"],
+      "verified": null,
+      "sources": ["https://learn.microsoft.com/microsoft-copilot-studio/mcp-add-existing-server-to-agent"]
+    },
+    {
+      "id": "geminiapp", "name": "Gemini", "kind": "web", "offered": false,
+      "note": "Google's Connected Apps, preview by application",
+      "connect": {"how": "linking", "where": "Google links eonik for the person once eonik is admitted to the preview"},
+      "callbackOrigins": ["https://oauth-redirect.googleusercontent.com", "https://oauth-redirect-sandbox.googleusercontent.com", "https://oauth-redirect-test.googleusercontent.com"],
+      "displayName": "Google",
+      "clientNames": [],
+      "keepsRefreshToken": true,
+      "verified": null,
+      "sources": ["https://developers.google.com/connected-apps/mcp/oauth"]
+    },
+    {
+      "id": "claudecode", "name": "Claude Code", "kind": "cli", "offered": true,
+      "note": "in your terminal",
+      "connect": {"how": "command", "command": "claude mcp add --transport http --scope user eonik {address}", "then": "Ask for something; Claude Code asks you to sign in to eonik the first time."},
+      "returnsToComputer": true,
+      "clientNames": ["claude-code"],
+      "verified": null,
+      "sources": ["https://code.claude.com/docs/en/mcp"]
+    },
+    {
+      "id": "codex", "name": "Codex", "kind": "cli", "offered": true,
+      "note": "in your terminal",
+      "connect": {"how": "command", "command": "codex mcp add eonik --url {address}", "then": "codex mcp login eonik"},
+      "returnsToComputer": true,
+      "clientNames": ["codex"],
+      "verified": {"on": "2026-11-24", "how": "Codex on the founder's Mac holds an eonik sign-in (codex mcp list: o_auth)"},
+      "sources": ["https://developers.openai.com/codex/mcp"]
+    },
+    {
+      "id": "geminicli", "name": "Gemini CLI", "kind": "cli", "offered": true,
+      "note": "in your terminal",
+      "connect": {"how": "command", "command": "gemini mcp add --scope user --transport http eonik {address}", "then": "In Gemini CLI, run /mcp auth eonik and sign in."},
+      "returnsToComputer": true,
+      "clientNames": ["gemini-cli", "gemini"],
+      "verified": null,
+      "sources": ["gemini mcp add --help (Gemini CLI 0.46.0, read 2026-11-24)", "https://www.geminicli.com/docs/tools/mcp-server"]
+    },
+    {
+      "id": "cursor", "name": "Cursor", "kind": "editor", "offered": true,
+      "note": "one click",
+      "connect": {"how": "config", "file": "~/.cursor/mcp.json", "entry": {"url": "{address}"}, "install": "cursor://anysphere.cursor-deeplink/mcp/install?name=eonik&config={base64_url_entry}"},
+      "returnsToComputer": true,
+      "clientNames": ["cursor"],
+      "verified": null,
+      "sources": ["https://cursor.com/docs/context/mcp"]
+    },
+    {
+      "id": "vscode", "name": "VS Code", "kind": "editor", "offered": true,
+      "note": "one click",
+      "connect": {"how": "command", "command": "code --add-mcp '{\"name\":\"eonik\",\"type\":\"http\",\"url\":\"{address}\"}'", "install": "vscode:mcp/install?{urlencoded_vscode_entry}"},
+      "returnsToComputer": true,
+      "clientNames": ["visual studio code", "vscode", "copilot"],
+      "verified": null,
+      "sources": ["https://code.visualstudio.com/docs/copilot/customization/mcp-servers"]
+    },
+    {
+      "id": "windsurf", "name": "Windsurf", "kind": "editor", "offered": true,
+      "note": "in its MCP settings",
+      "connect": {"how": "config", "file": "~/.codeium/windsurf/mcp_config.json", "entry": {"serverUrl": "{address}"}, "then": "Windsurf asks you to sign in the first time it uses eonik."},
+      "returnsToComputer": true,
+      "clientNames": ["windsurf", "cascade"],
+      "verified": null,
+      "sources": ["https://docs.windsurf.com/windsurf/cascade/mcp"]
+    },
+    {
+      "id": "zed", "name": "Zed", "kind": "editor", "offered": true,
+      "note": "in its settings",
+      "connect": {"how": "config", "file": "~/.config/zed/settings.json", "key": "context_servers", "entry": {"url": "{address}"}, "then": "Zed asks you to sign in to eonik."},
+      "returnsToComputer": true,
+      "clientNames": ["zed"],
+      "verified": null,
+      "sources": ["https://zed.dev/docs/ai/mcp"]
+    }
+  ]
+}

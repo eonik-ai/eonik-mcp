@@ -1,5 +1,30 @@
 # Changelog
 
+## 5.1.0 (2026-11-24)
+
+Any assistant can now connect to eonik and sign in, not only the ones eonik had listed. Tools and replies are
+unchanged.
+
+### New
+
+- **Sign-in is open to any assistant** that returns to an https address or to the person's own computer. eonik's
+  sign-in page names an assistant it knows by its name, and any other by its own site ("Access goes to glama.ai"),
+  so a person always sees where access goes before pressing Allow. Before this, a web assistant eonik had not listed
+  was refused at sign-in.
+- **A browser-based assistant can call eonik** from any https site, without cookies: `/mcp`, the sign-in endpoints
+  and the discovery documents answer it.
+- **`https://www.eonik.ai/mcp` is the same server** as `https://api.eonik.ai/mcp`: either address connects and signs
+  in.
+- **eonik's Server Card** is at `https://api.eonik.ai/mcp/server-card` (MCP SEP-2127), listed in
+  `https://www.eonik.ai/.well-known/ai-catalog.json`.
+- **`npx eonik-mcp init`** also connects Gemini CLI and Windsurf, and says how to add eonik to Zed and Perplexity.
+  Every command comes from eonik's one list of assistants (`src/assistants.json`).
+
+### Fixed
+
+- The protected-resource document at the server's root now names the server's own address (RFC 9728 §3.3); the
+  `/mcp` document, which every sign-in uses, is unchanged.
+
 ## 5.0.0 (2026-11-09)
 
 An assistant can now set eonik up for a new person, and eonik lists 30 tools instead of 46: fewer,

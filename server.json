@@ -8,7 +8,7 @@
     "url": "https://github.com/eonik-ai/eonik-mcp",
     "source": "github"
   },
-  "version": "5.0.0",
+  "version": "5.1.0",
   "remotes": [
     {
       "type": "streamable-http",
@@ -20,7 +20,7 @@
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
       "identifier": "eonik-mcp",
-      "version": "5.0.0",
+      "version": "5.1.0",
       "transport": {
         "type": "stdio"
       },
