@@ -1,6 +1,6 @@
 {
   "name": "eonik-mcp",
-  "version": "5.1.0",
+  "version": "5.2.0",
   "description": "eonik in Claude, ChatGPT, Cursor, Codex and VS Code: set eonik up for your brand, watch competitors' ads, read your own, and make every size of an ad on-brand in the eonik app on your Mac. `npx eonik-mcp init` connects them all.",
   "main": "build/index.js",
   "type": "module",

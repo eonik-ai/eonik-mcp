@@ -13,6 +13,7 @@
  *   Cursor       ~/.cursor/mcp.json  {"mcpServers": {"eonik": {"url": …}}}    (cursor.com/docs/context/mcp)
  *   Codex        `codex mcp add eonik --url <url>`, which starts the sign-in itself   (Codex MCP docs)
  *   Gemini CLI   `gemini mcp add --scope user --transport http eonik <url>`, then `/mcp auth eonik` in it
+ *   Antigravity  ~/.gemini/config/mcp_config.json  {"mcpServers": {"eonik": {"serverUrl": …}}}, then Authenticate in it
  *   Windsurf     ~/.codeium/windsurf/mcp_config.json  {"mcpServers": {"eonik": {"serverUrl": …}}}
  *   Zed          said, not written: its settings file may hold comments a rewrite would lose
  *
@@ -162,26 +163,48 @@ function geminiCli(dry: boolean): Outcome | null {
   return { host, said: r.ok ? `connected; ${then}` : `could not add eonik (${r.out || "no reason given"})` };
 }
 
-function windsurf(dry: boolean): Outcome | null {
-  const dir = join(homedir(), ".codeium", "windsurf");
-  if (!existsSync(dir)) return null;
-  const host = "Windsurf";
-  const file = join(dir, "mcp_config.json");
+/** eonik written beside the servers a JSON config file already holds, once, and never into a file it cannot read. */
+function mergeConfig(host: string, file: string, entry: Record<string, string>, dry: boolean, then: string): Outcome {
   let config: { mcpServers?: Record<string, unknown> } = {};
   if (existsSync(file)) {
     try {
       config = JSON.parse(readFileSync(file, "utf8"));
     } catch {
-      return { host, said: `left ${file} alone: it is not valid JSON. Add "${NAME}": {"serverUrl": "${MCP_URL}"} under mcpServers.` };
+      return { host, said: `left ${file} alone: it is not valid JSON. Add "${NAME}": ${JSON.stringify(entry)} under mcpServers.` };
     }
   }
-  const servers = (config.mcpServers ?? {}) as Record<string, { serverUrl?: string }>;
-  if (servers[NAME]?.serverUrl === MCP_URL) return { host, said: "already connected" };
+  const servers = (config.mcpServers ?? {}) as Record<string, Record<string, string>>;
+  const [key, value] = Object.entries(entry)[0];
+  if (servers[NAME]?.[key] === value) return { host, said: "already connected" };
   if (dry) return { host, said: `would add "${NAME}" to ${file}` };
-  const next = { ...config, mcpServers: { ...servers, [NAME]: { serverUrl: MCP_URL } } };
+  const next = { ...config, mcpServers: { ...servers, [NAME]: entry } };
   writeFileSync(`${file}.eonik-tmp`, `${JSON.stringify(next, null, 2)}\n`);
   renameSync(`${file}.eonik-tmp`, file);
-  return { host, said: "connected; Windsurf asks you to sign in the first time it uses eonik" };
+  return { host, said: `connected; ${then}` };
+}
+
+/** The list's own file and entry for an assistant that is set up by its config file. */
+function listedEntry(id: string): Record<string, string> {
+  const entry = (listed(id).connect as { entry?: Record<string, string | undefined> }).entry ?? {};
+  return Object.fromEntries(Object.entries(entry)
+    .filter((kv): kv is [string, string] => typeof kv[1] === "string")
+    .map(([k, v]) => [k, v.replaceAll("{address}", MCP_URL)]));
+}
+
+function windsurf(dry: boolean): Outcome | null {
+  const dir = join(homedir(), ".codeium", "windsurf");
+  if (!existsSync(dir)) return null;
+  return mergeConfig("Windsurf", join(dir, "mcp_config.json"), listedEntry("windsurf"), dry,
+    "Windsurf asks you to sign in the first time it uses eonik");
+}
+
+/** Google's replacement for Gemini CLI for personal accounts (retired 18 Jun 2026). Its IDE and CLI share this file. */
+function antigravity(dry: boolean): Outcome | null {
+  const dir = join(homedir(), ".gemini", "config");
+  if (!existsSync(dir) && !existsSync("/Applications/Antigravity IDE.app") && !existsSync("/Applications/Antigravity.app")) return null;
+  if (!dry) mkdirSync(dir, { recursive: true });
+  return mergeConfig("Antigravity", join(dir, "mcp_config.json"), listedEntry("antigravity"), dry,
+    (listed("antigravity").connect as { then: string }).then);
 }
 
 function zed(): Outcome | null {
@@ -212,7 +235,7 @@ export function init(argv: string[]): number {
   const dry = argv.includes("--dry-run");
   // Said first: Codex signs the person in while `init` runs, in this terminal.
   console.log(dry ? "eonik: what init would do (nothing is changed)\n" : "eonik: connecting your assistants\n");
-  const found = [claudeCode(dry), vsCode(dry), cursor(dry), codex(dry), geminiCli(dry), windsurf(dry), zed(), claudeDesktop(), perplexity()]
+  const found = [claudeCode(dry), vsCode(dry), cursor(dry), codex(dry), geminiCli(dry), antigravity(dry), windsurf(dry), zed(), claudeDesktop(), perplexity()]
     .filter((o): o is Outcome => o !== null);
   if (!found.length) {
     console.log(`No assistant found on this computer. In any assistant that adds MCP servers, add ${MCP_URL} and sign in to eonik.`);

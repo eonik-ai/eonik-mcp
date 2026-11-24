@@ -1,5 +1,22 @@
 # Changelog
 
+## 5.2.0 (2026-11-24)
+
+Antigravity, Google's replacement for Gemini CLI on personal accounts, connects to eonik. Tools and replies are
+unchanged.
+
+### New
+
+- **`npx eonik-mcp init` adds eonik to Antigravity** (`~/.gemini/config/mcp_config.json`, beside the servers already
+  there) and says how to sign in: run `agy`, type `/mcp`, choose eonik. Walked on production on 24 Nov with
+  Antigravity CLI 1.5.16.
+- **Glama can verify eonik's listing** at `https://api.eonik.ai/mcp/.well-known/glama.json`.
+
+### Changed
+
+- **Gemini CLI is offered for work licences and API keys only.** Google retired it for personal accounts on
+  18 Jun 2026; it refuses them with "This client is no longer supported for Gemini Code Assist for individuals".
+
 ## 5.1.0 (2026-11-24)
 
 Any assistant can now connect to eonik and sign in, not only the ones eonik had listed. Tools and replies are

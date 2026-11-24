@@ -98,12 +98,21 @@
     },
     {
       "id": "geminicli", "name": "Gemini CLI", "kind": "cli", "offered": true,
-      "note": "in your terminal",
+      "note": "with a work licence or API key",
       "connect": {"how": "command", "command": "gemini mcp add --scope user --transport http eonik {address}", "then": "In Gemini CLI, run /mcp auth eonik and sign in."},
       "returnsToComputer": true,
       "clientNames": ["gemini-cli", "gemini"],
       "verified": null,
-      "sources": ["gemini mcp add --help (Gemini CLI 0.46.0, read 2026-11-24)", "https://www.geminicli.com/docs/tools/mcp-server"]
+      "sources": ["gemini mcp add --help (Gemini CLI 0.46.0, read 2026-11-24)", "https://www.geminicli.com/docs/tools/mcp-server", "Retired for personal Google accounts on 2026-06-18 (Google AI Pro, Ultra, free): on 2026-11-24 it refused the founder's account, 'This client is no longer supported for Gemini Code Assist for individuals'; Code Assist Standard/Enterprise and API keys still work (https://github.com/google-gemini/gemini-cli/issues/28229). Antigravity replaces it"]
+    },
+    {
+      "id": "antigravity", "name": "Antigravity", "kind": "editor", "offered": true,
+      "note": "by Google",
+      "connect": {"how": "config", "file": "~/.gemini/config/mcp_config.json", "entry": {"serverUrl": "{address}"}, "command": "agy mcp add eonik {address}", "then": "Run agy, type /mcp, choose eonik and sign in."},
+      "callbackOrigins": ["https://antigravity.google"],
+      "clientNames": ["antigravity"],
+      "verified": {"on": "2026-11-24", "how": "agy 1.5.16 on the founder's Mac signed in on production by its client document: consent, Google sign-in, eonik.ai brand choice, token 200 (nginx log 08:59 UTC), 30 tools listed. Antigravity IDE 2.6.0 has no control that starts an MCP sign-in (its Authenticate opens Settings)"},
+      "sources": ["https://antigravity.google/docs/mcp", "https://antigravity.google/oauth/client-metadata.json (its client document: one return address, https://antigravity.google/oauth-callback)"]
     },
     {
       "id": "cursor", "name": "Cursor", "kind": "editor", "offered": true,

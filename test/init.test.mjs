@@ -62,3 +62,16 @@ test("windsurf: a file that is not JSON is left exactly as it was, and the line 
   assert.match(initIn(home), /Windsurf: left .* alone/);
   assert.equal(readFileSync(file, "utf8"), "{ // a comment\n}");
 });
+
+test("antigravity: eonik joins the servers in ~/.gemini/config/mcp_config.json by serverUrl, once", () => {
+  const home = mkdtempSync(join(tmpdir(), "eonik-init-"));
+  const dir = join(home, ".gemini", "config");
+  mkdirSync(dir, { recursive: true });
+  const file = join(dir, "mcp_config.json");
+  writeFileSync(file, JSON.stringify({ mcpServers: { producthunt: { url: "https://mcp.producthunt.com/mcp" } } }));
+  assert.match(initIn(home), /Antigravity: connected; Run agy, type \/mcp, choose eonik and sign in/);
+  const after = JSON.parse(readFileSync(file, "utf8"));
+  assert.deepEqual(after.mcpServers.producthunt, { url: "https://mcp.producthunt.com/mcp" });
+  assert.deepEqual(after.mcpServers.eonik, { serverUrl: LIST.address });
+  assert.match(initIn(home), /Antigravity: already connected/);
+});
